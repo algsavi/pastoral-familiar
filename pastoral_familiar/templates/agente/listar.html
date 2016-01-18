@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="content-header">
+        <h2>Agentes <small>- listar agentes</small></h2>
+        <!--<ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
+        </ol>-->
+    </section>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{ url_for('agente.novo') }}" class="btn btn-primary">Novo</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <col width="3%">
+                    <col width="75%">
+                    <col width="17%">
+                    <col width="5%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Núcleo</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for agente in agentes %}
+                            <tr>
+                                <td>1</td>
+                                <td><a href="#">{{ agente.nome }}</a></td>
+                                <td><a href="#">{{ agente.descricao }}</a></td>
+                                <td class="center">
+                                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>Descrição</th>
+                    <th>&nbsp;</th>
+                </tr>
+                
+            </table>
+        </div>
+    </section><!-- /.content -->
+{% endblock %}

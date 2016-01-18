@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="content-header">
+        <h2>Núcleos <small>- listar núcleos</small></h2>
+        <!--<ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
+        </ol>-->
+    </section>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{ url_for('nucleo.novo') }}" class="btn btn-primary">Novo</a>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <col width="3%">
+                    <col width="92%">
+                    <col width="5%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Descrição</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for nucleo in nucleos %}
+                            <tr>
+                                <td>1</td>
+                                <td><a href="{{ url_for('nucleo.editar', id=nucleo.id) }}">{{ nucleo.descricao }}</a></td>
+                                <td class="center"><a href="{{ url_for('nucleo.excluir', id=nucleo.id) }}">
+                                                <span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>Descrição</th>
+                    <th>&nbsp;</th>
+                </tr>
+                
+            </table>
+        </div>
+    </section><!-- /.content -->
+{% endblock %}
