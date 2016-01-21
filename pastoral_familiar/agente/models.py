@@ -17,6 +17,9 @@ class Agente(db.Model):
     bairro = db.Column(db.VARCHAR(30))
     telefone_residencial = db.Column(db.VARCHAR(15))
     senha = db.Column(db.VARCHAR(250))
+    coordenador_pastoral = db.Column(db.Boolean)
+    coordenador_nucleo = db.Column(db.Boolean)
+    ativo = db.Column(db.Boolean)
     id_nucleo = db.Column(db.Integer, db.ForeignKey('nucleo.id'))
 
     def define_senha(self, senha):
@@ -24,3 +27,18 @@ class Agente(db.Model):
 
     def verifica_senha(self, senha):
         return check_password_hash(self.senha, senha)
+    
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        """Return the email address to satisfy Flask-Login's requirements."""
+        return self.email
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return self.authenticated
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return self.is_anonymous

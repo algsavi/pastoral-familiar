@@ -25,18 +25,25 @@
                             <th>#</th>
                             <th>Nome</th>
                             <th>Núcleo</th>
+                            {% if g.user.coordenador_pastoral == True %}
                             <th>Excluir</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for agente in agentes %}
                             <tr>
-                                <td>1</td>
-                                <td><a href="#">{{ agente.nome }}</a></td>
-                                <td><a href="#">{{ agente.descricao }}</a></td>
-                                <td class="center">
-                                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
-                                </td>
+                                <td>{{ loop.index }}</td>
+                                {% if g.user.coordenador_pastoral == True or g.user.coordenador_nucleo == True %}
+                                <td><a href="{{ url_for('agente.editar', id=agente.id) }}">{{ agente.nome }}</a></td>
+                                {% else %}
+                                <td>{{ agente.nome }}</td>
+                                {% endif %}
+                                <td>{{ agente.descricao }}</td>
+                                {% if g.user.coordenador_pastoral == True %}
+                                <td class="center"><a href="{{ url_for('agente.excluir', id=agente.id) }}">
+                                                <span class="glyphicon glyphicon-remove"></span></a></td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -44,16 +51,4 @@
             </div>
         </div>
     </div>
-
-    <section class="content">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr>
-                    <th>Descrição</th>
-                    <th>&nbsp;</th>
-                </tr>
-                
-            </table>
-        </div>
-    </section><!-- /.content -->
 {% endblock %}

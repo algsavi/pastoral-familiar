@@ -94,16 +94,3 @@
         <button type="submit" class="{{ btn_class }}">{{ action_text }} </button>
     </form>
 {%- endmacro %}
-
-{% macro menu(nome) %}
-    <ul class="nav navbar-nav">
-        <li class="{% if nome=='dashboard' %} active {% endif %}"><a href="#">Home</a></li>
-        <li class="{% if nome=='agente' %} active {% endif %}"><a href="{{ url_for('agente.index') }}">Agentes</a></li>
-        <li class="{% if nome=='cadastros' %} active {% endif %} dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Cadastros <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url_for('nucleo.index') }}">Núcleos</a></li>
-            </ul>
-        </li>
-    </ul>
-{% endmacro %}

@@ -29,7 +29,7 @@
                     <tbody>
                         {% for nucleo in nucleos %}
                             <tr>
-                                <td>1</td>
+                                <td>{{ loop.index }}</td>
                                 <td><a href="{{ url_for('nucleo.editar', id=nucleo.id) }}">{{ nucleo.descricao }}</a></td>
                                 <td class="center"><a href="{{ url_for('nucleo.excluir', id=nucleo.id) }}">
                                                 <span class="glyphicon glyphicon-remove"></span></a></td>
@@ -40,16 +40,4 @@
             </div>
         </div>
     </div>
-
-    <section class="content">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr>
-                    <th>Descrição</th>
-                    <th>&nbsp;</th>
-                </tr>
-                
-            </table>
-        </div>
-    </section><!-- /.content -->
 {% endblock %}
