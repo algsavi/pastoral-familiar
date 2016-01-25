@@ -17,8 +17,8 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    #op.add_column('agente', sa.Column('cep', sa.VARCHAR(10), nullable=False))
+    
 
 
 def downgrade():
-    #op.drop_column('agente', 'cep')
+    
