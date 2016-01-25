@@ -33,7 +33,7 @@ def index():
     return render_template('agente/listar.html', menu='agente', agentes=agentes)
 
 
-@agente.route('/login', methods=['GET', 'POST'])
+@agente.route('/login/', methods=['GET', 'POST'])
 def login():
     if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('index'))
@@ -59,7 +59,7 @@ def login():
     return render_template('agente/login.html', form = form)
 
 
-@agente.route("/logout")
+@agente.route("/logout/")
 @login_required
 def logout():
     logout_user()
@@ -71,7 +71,7 @@ def load_user(email):
     return Agente.query.filter(Agente.email==email).first()
 
 
-@agente.route('/novo', methods=['GET', 'POST'])
+@agente.route('/novo/', methods=['GET', 'POST'])
 def novo():
     nucleos = [(c.id, c.descricao) for c in Nucleo.query.order_by(Nucleo.descricao).all()]
     form = AgenteFormInserir()
@@ -101,7 +101,7 @@ def novo():
     return render_template("agente/form.html", form = form, menu='agente')
 
 @login_required
-@agente.route('/editar/<int:id>', methods=['GET', 'POST'])
+@agente.route('/editar/<int:id>/', methods=['GET', 'POST'])
 def editar(id):
     agente = Agente.query.get_or_404(id)
 
@@ -131,7 +131,7 @@ def editar(id):
     return render_template("agente/form_editar.html", form = form, menu="cadastros", submenu='encontro')
 
 
-@agente.route('/excluir/<int:id>', methods=['GET', 'POST'])
+@agente.route('/excluir/<int:id>/', methods=['GET', 'POST'])
 @admin_permission.require(http_exception=403)
 def excluir(id):
     if id <> None and request.method == "GET":

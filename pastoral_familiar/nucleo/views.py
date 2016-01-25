@@ -23,7 +23,7 @@ def index():
     return render_template('nucleo/listar.html', menu='cadastros', nucleos=nucleos)
 
 
-@nucleo.route('/novo', methods=['GET', 'POST'])
+@nucleo.route('/novo/', methods=['GET', 'POST'])
 @admin_permission.require(http_exception=403)
 def novo():
     form = NucleoForm()
@@ -41,7 +41,7 @@ def novo():
     return render_template("nucleo/form.html", form = form, menu="cadastros", submenu='encontro')
 
 
-@nucleo.route('/editar/<int:id>', methods=['GET', 'POST'])
+@nucleo.route('/editar/<int:id>/', methods=['GET', 'POST'])
 @admin_permission.require(http_exception=403)
 def editar(id):
     nucleo = Nucleo.query.get_or_404(id)
@@ -57,7 +57,7 @@ def editar(id):
 
     return render_template("nucleo/form.html", form = form, menu="cadastros", submenu='encontro')
 
-@nucleo.route('/excluir/<int:id>', methods=['GET', 'POST'])
+@nucleo.route('/excluir/<int:id>/', methods=['GET', 'POST'])
 @admin_permission.require(http_exception=403)
 def excluir(id):
     if id <> None and request.method == "GET":
