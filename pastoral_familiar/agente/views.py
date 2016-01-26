@@ -128,7 +128,7 @@ def editar(id):
         flash(u"Agente editado com sucesso!")
         return redirect("/agente/")
 
-    return render_template("agente/form_editar.html", form = form, menu="cadastros", submenu='encontro')
+    return render_template("agente/form_editar.html", form = form, menu='agente')
 
 
 @agente.route('/excluir/<int:id>/', methods=['GET', 'POST'])
