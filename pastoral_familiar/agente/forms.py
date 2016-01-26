@@ -6,14 +6,14 @@ from wtforms import TextField, HiddenField, BooleanField, DateField, PasswordFie
 
 class AgenteForm(Form):
     nome = TextField('Nome', [validators.Required(u'Você precisa digitar o nome!'),
-                                    validators.Length(max=35)])
+                                    validators.Length(max=65)])
     dt_nascimento = DateField('Data Nascimento',
                             [validators.DataRequired(u'Você precisa digitar a data de nascimento!')],
                             format='%d/%m/%Y')
 
     celular = TextField('Celular', [validators.Length(max=15)])
     endereco = TextField(u'Endereço', [validators.DataRequired(u'Você precisa digitar o endereço!'), 
-                                        validators.Length(max=30)])
+                                        validators.Length(max=125)])
     bairro = TextField(u'Bairro', [validators.DataRequired(u'Você precisa digitar o bairro!'), 
                                         validators.Length(max=30)])
     cep = TextField(u'CEP', [validators.DataRequired(u'Você precisa digitar o CEP!'), 
