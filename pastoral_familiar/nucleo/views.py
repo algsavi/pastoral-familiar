@@ -35,7 +35,7 @@ def novo():
         db.session.add(nucleo)
         db.session.commit()
 
-        flash(u"Nucleo adicionado com sucesso!")
+        flash(u"Núcleo adicionado com sucesso!", "success")
         return redirect("/nucleo/")
 
     return render_template("nucleo/form.html", form = form, menu="cadastros", submenu='encontro')
@@ -52,7 +52,7 @@ def editar(id):
 
         db.session.commit()
 
-        flash(u"Nucleo editado com sucesso!")
+        flash(u"Núcleo editado com sucesso!", "success")
         return redirect("/nucleo/")
 
     return render_template("nucleo/form.html", form = form, menu="cadastros", submenu='encontro')
@@ -66,7 +66,9 @@ def excluir(id):
         try:
             db.session.delete(nucleo)
             db.session.commit()
+            
+            flash(u'Núcleo excluído com sucesso!', "success")
         except IntegrityError:
-            flash(u'ERRO: Existem agentes vinculados ao Nucleo!')
+            flash(u'ERRO: Existem agentes vinculados ao Nucleo!', "warning")
 
     return redirect("/nucleo/")

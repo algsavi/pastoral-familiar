@@ -91,12 +91,12 @@ def novo():
             db.session.add(agente)
             db.session.commit()
             
-            flash("Agente adicionado com sucesso!")
+            flash("Agente adicionado com sucesso!", "success")
             
             return redirect("/agente/")
         except Exception:
             db.session.rollback()
-            flash(u'ERRO: E-mail já utilizado!')        
+            flash(u'ERRO: E-mail já utilizado!', "warning")        
 
     return render_template("agente/form.html", form = form, menu='agente')
 
@@ -125,7 +125,7 @@ def editar(id):
 
         db.session.commit()
 
-        flash(u"Agente editado com sucesso!")
+        flash(u"Agente editado com sucesso!", "success")
         return redirect("/agente/")
 
     return render_template("agente/form_editar.html", form = form, menu='agente')
@@ -140,5 +140,7 @@ def excluir(id):
         agente.ativo = False
 
         db.session.commit()
+        
+        flash(u"Agente excluído com sucesso!", "success")
 
     return redirect("/agente/")
