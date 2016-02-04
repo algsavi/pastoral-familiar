@@ -14,6 +14,7 @@
         <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ url_for('static', filename='css/layout.css') }}" rel="stylesheet" type="text/css" />
+        {% block styles %}{% endblock %}
 
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script src="{{ url_for('static', filename='js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
@@ -52,6 +53,7 @@
                             </ul>
                         </li>
                         {% endif %}
+                        <li class="{% if menu=='eventos' %} active {% endif %}"><a href="{{ url_for('evento.index') }}">Eventos</a></li>
                     </ul>
                     {% if g.user.id %}
                     <ul class="nav navbar-nav navbar-right">
@@ -59,8 +61,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url_for('agente.editar', id=g.user.id) }}">Meus Dados</span></a></li>
+                            <li><a href="{{ url_for_security('change_password') }}">Trocar Senha</span></a></li>
                             <li class="divider"></li>
-                            <li><a href="{{ url_for('agente.logout') }}">Sair</span></a></li>
+                            <li><a href="{{ url_for_security('logout') }}">Sair</span></a></li>
                         </ul>
                         </li>
                     </ul>

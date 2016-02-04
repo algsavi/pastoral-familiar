@@ -3,6 +3,10 @@
 
 from flask_wtf import Form
 from wtforms import TextField, HiddenField, BooleanField, DateField, PasswordField, SelectField, validators
+from flask.ext.security.forms import LoginForm, ChangePasswordForm, RegisterForm
+from flask.ext.security.utils import encrypt_password
+from models import Agente
+
 
 class AgenteForm(Form):
     nome = TextField('Nome', [validators.Required(u'Você precisa digitar o nome!'),
@@ -28,15 +32,52 @@ class AgenteForm(Form):
 class AgenteFormEditar(AgenteForm):
     coordenador_nucleo = BooleanField(u'Coordenador Núcleo')
 
+
 class AgenteFormInserir(AgenteForm):
     email = TextField('Email', [validators.DataRequired(u'Você precisa digitar o e-mail!'),
                                 validators.Length(max=40), validators.email(u'E-mail inválido')])
-    senha = PasswordField('Senha', [validators.DataRequired(u'Você precisa digitar a senha!'),
+    password = PasswordField('Senha', [validators.DataRequired(u'Você precisa digitar a senha!'),
+                                validators.Length(max=50),
+                                validators.EqualTo('password_confirm', message='As senhas precisam ser as mesmas!')])
+    
+    password_confirm = PasswordField('Conformar Senha', [validators.DataRequired(u'Você precisa digitar a senha!'),
                                 validators.Length(max=50)])
 
-class LoginForm(Form):
+
+def validaLogin(email):
+    agente = Agente.query.filter(Agente.email==email.data).first()
+
+    if agente is not None:
+        return agente
+
+class PFLoginForm(LoginForm):
     email = TextField('Email', [validators.DataRequired(u'Você precisa digitar o e-mail!'),
                                 validators.Length(max=40), validators.email(u'E-mail inválido')])
-    senha = PasswordField('Senha', [validators.DataRequired(u'Você precisa digitar a senha!'),
+    password = PasswordField('Senha', [validators.DataRequired(u'Você precisa digitar a senha!'),
                                 validators.Length(max=50)])
-    remember_me = BooleanField('Lembrar acesso')
+    remember = BooleanField('Lembrar acesso')
+
+    def validate(self):
+        self.user = validaLogin(self.email)
+
+        if self.user and self.user.password.startswith("pbkdf2:sha1"):
+            if check_password_hash(self.user.password, self.password.data):
+                self.user.password = encrypt_password(self.password.data)
+                
+                return True 
+        
+        if not super(PFLoginForm, self).validate():
+            return False
+
+        return True
+
+
+class AlterarSenhaForm(ChangePasswordForm):
+    password = PasswordField('Senha', [validators.DataRequired(u'Você precisa digitar a senha atual!'),
+                                validators.Length(max=50)])
+    new_password = PasswordField('Nova Senha', [validators.DataRequired(u'Você precisa digitar a nova senha!'),
+                                validators.Length(max=50),
+                                validators.EqualTo('new_password_confirm', message='As senhas precisam ser as mesmas!')])
+
+    new_password_confirm = PasswordField('Confirmar Senha', [validators.DataRequired(u'Você precisa confirmar a senha!'),
+                                validators.Length(max=50)])

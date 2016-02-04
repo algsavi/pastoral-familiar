@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg-12">
             <form action="{{ form_action }}" role="form" class="form-horizontal" method="POST">
-            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -36,7 +36,8 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             {{ macros.render_field(form.email) }}
-                            {{ macros.render_field(form.senha) }}
+                            {{ macros.render_field(form.password) }}
+                            {{ macros.render_field(form.password_confirm) }}
                         </div>
                     </div>
                 </div>
@@ -56,9 +57,9 @@
 <script src="{{ url_for('static', filename='js/jquery.maskedinput.min.js') }}"></script>
 
 <script>
-    $("#dt_nascimento").mask("99/99/9999");
-    $('#celular').mask('(99) 99999-9999');
-    $('#telefone_residencial').mask('(99) 9999-9999');
-    $('#cep').mask('99.999-999');
+    $("#dt_nascimento").mask("00/00/0000");
+    $('#celular').mask('(00) 00000-0000');
+    $('#telefone_residencial').mask('(00) 0000-0000');
+    $('#cep').mask('00.000-000');
 </script>
 {% endblock %}

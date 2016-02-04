@@ -1,0 +1,45 @@
+{% import 'macros/macros.html' as macros %}
+{% extends "base.html" %}
+{% block content %}
+    <section class="content-header">
+        <h2>Cadastro <small>- eventos</small></h2>
+    </section>
+    <div class="row">
+        <div class="col-lg-12">
+            <form action="{{ form_action }}" role="form" class="form-horizontal" method="POST">
+            {{ form.csrf_token }}
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Dados do Evento</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                            {{ macros.render_field(form.descricao) }}
+                            {{ macros.render_field(form.dt_evento) }}
+                            {{ macros.render_field(form.tp_evento) }}
+                            {{ macros.render_field(form.id_nucleo) }}
+                            {{ macros.render_field(form.tx_inscricao) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="well well-sm">
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery.maskedinput.min.js') }}"></script>
+
+<script>
+    $("#dt_evento").mask("00/00/0000");
+    $("#tx_inscricao").mask('#.##0,00', {reverse: true});
+</script>
+{% endblock %}

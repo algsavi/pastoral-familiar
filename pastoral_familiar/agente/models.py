@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from extensions import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_security import UserMixin, RoleMixin
 
-class Agente(db.Model):
+perfis_agentes = db.Table('perfis_agentes',
+        db.Column('id_agente', db.Integer(), db.ForeignKey('agente.id')),
+        db.Column('id_perfil', db.Integer(), db.ForeignKey('perfil.id')))
+
+class Agente(UserMixin, db.Model):
     __tablename__ = 'agente'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.VARCHAR(65))
@@ -16,29 +20,34 @@ class Agente(db.Model):
     cidade = db.Column(db.VARCHAR(30))
     bairro = db.Column(db.VARCHAR(30))
     telefone_residencial = db.Column(db.VARCHAR(15))
-    senha = db.Column(db.VARCHAR(250))
+    password = db.Column(db.VARCHAR(250))
     coordenador_pastoral = db.Column(db.Boolean)
     coordenador_nucleo = db.Column(db.Boolean)
-    ativo = db.Column(db.Boolean)
+    active = db.Column(db.Boolean)
     id_nucleo = db.Column(db.Integer, db.ForeignKey('nucleo.id'))
+    roles = db.relationship('Perfil', secondary=perfis_agentes, backref='perfil', lazy='dynamic')
 
-    def define_senha(self, senha):
-        self.senha = generate_password_hash(senha)
+    #def define_senha(self, senha):
+    #    self.senha = generate_password_hash(senha)
 
-    def verifica_senha(self, senha):
-        return check_password_hash(self.senha, senha)
-    
+    #def verifica_senha(self, senha):
+    #    return check_password_hash(self.senha, senha)
+
     def is_active(self):
         return True
 
     def get_id(self):
-        """Return the email address to satisfy Flask-Login's requirements."""
-        return self.email
+        return unicode(self.id)
 
     def is_authenticated(self):
-        """Return True if the user is authenticated."""
         return self.authenticated
 
     def is_anonymous(self):
-        """False, as anonymous users aren't supported."""
         return self.is_anonymous
+
+
+class Perfil(RoleMixin, db.Model):
+    __tablename__ = 'perfil'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.VARCHAR(35))
+    description = db.Column(db.VARCHAR(100))

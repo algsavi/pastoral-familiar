@@ -4,27 +4,25 @@
 from flask import Blueprint, render_template, request, flash, redirect, g
 from models import Nucleo
 from forms import NucleoForm
-from extensions import db, login_required, current_user
+from extensions import db, current_user, login_required
 from sqlalchemy.exc import IntegrityError
-from ..agente.views import admin_permission
+from ..agente.views import coordenador_pastoral
+from config import DATA_PER_PAGE
 
 nucleo = Blueprint('nucleo', __name__)
-
-@nucleo.before_request
-def before_request():
-    g.user = current_user
-
+    
 
 @nucleo.route('/')
-@admin_permission.require(http_exception=403)
-def index():
-    nucleos = Nucleo.query.order_by(Nucleo.descricao)
+@nucleo.route('/<int:page>', methods = ['GET', 'POST'])
+@coordenador_pastoral.require(http_exception=403)
+def index(page = 1):
+    nucleos = Nucleo.query.order_by(Nucleo.descricao).paginate(page, DATA_PER_PAGE, False)
 
-    return render_template('nucleo/listar.html', menu='cadastros', nucleos=nucleos)
+    return render_template('nucleo/listar.html', menu='cadastros', cur_page=page, nucleos=nucleos)
 
 
 @nucleo.route('/novo/', methods=['GET', 'POST'])
-@admin_permission.require(http_exception=403)
+@coordenador_pastoral.require(http_exception=403)
 def novo():
     form = NucleoForm()
 
@@ -38,11 +36,11 @@ def novo():
         flash(u"Núcleo adicionado com sucesso!", "success")
         return redirect("/nucleo/")
 
-    return render_template("nucleo/form.html", form = form, menu="cadastros", submenu='encontro')
+    return render_template("nucleo/form.html", form = form, menu="cadastros")
 
 
 @nucleo.route('/editar/<int:id>/', methods=['GET', 'POST'])
-@admin_permission.require(http_exception=403)
+@coordenador_pastoral.require(http_exception=403)
 def editar(id):
     nucleo = Nucleo.query.get_or_404(id)
     form = NucleoForm(obj=nucleo)
@@ -55,10 +53,12 @@ def editar(id):
         flash(u"Núcleo editado com sucesso!", "success")
         return redirect("/nucleo/")
 
-    return render_template("nucleo/form.html", form = form, menu="cadastros", submenu='encontro')
+    return render_template("nucleo/form.html", form = form, menu="cadastros")
+
 
 @nucleo.route('/excluir/<int:id>/', methods=['GET', 'POST'])
-@admin_permission.require(http_exception=403)
+@login_required
+@coordenador_pastoral.require(http_exception=403)
 def excluir(id):
     if id <> None and request.method == "GET":
         nucleo = Nucleo.query.get_or_404(id)
@@ -69,6 +69,6 @@ def excluir(id):
             
             flash(u'Núcleo excluído com sucesso!', "success")
         except IntegrityError:
-            flash(u'ERRO: Existem agentes vinculados ao Nucleo!', "warning")
+            flash(u'ERRO: Existem agentes vinculados ao Núcleo!', "warning")
 
     return redirect("/nucleo/")
