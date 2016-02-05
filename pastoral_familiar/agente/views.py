@@ -90,6 +90,7 @@ def novo():
 
     return render_template("agente/form.html", form = form, menu='agente')
 
+
 @agente.route('/editar/<int:id>/', methods=['GET', 'POST'])
 def editar(id):
     agente = Agente.query.get_or_404(id)

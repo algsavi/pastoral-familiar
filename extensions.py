@@ -8,5 +8,3 @@ from flask_principal import Principal, Permission, RoleNeed, identity_loaded, id
 from flask.ext.security import Security
 
 db = SQLAlchemy()
-#lm.login_view = 'agente.login'
-#lm.login_message = u'Por favor, faça o login para acessar a página!'

@@ -6,7 +6,7 @@ from wtforms import TextField, HiddenField, BooleanField, DateField, PasswordFie
 from flask.ext.security.forms import LoginForm, ChangePasswordForm, RegisterForm
 from flask.ext.security.utils import encrypt_password
 from models import Agente
-
+from werkzeug.security import check_password_hash
 
 class AgenteForm(Form):
     nome = TextField('Nome', [validators.Required(u'Você precisa digitar o nome!'),
