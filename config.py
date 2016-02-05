@@ -29,7 +29,7 @@ SECURITY_MSG_PASSWORD_IS_THE_SAME = (u"A nova senha precisa ser diferente da sen
 SECURITY_MSG_LOGIN = (u"Por favor, faça o login para acessar a página", "error")
 SECURITY_MSG_INVALID_RESET_PASSWORD_TOKEN = (u"Token inválido", "error")
 
-MAIL_SERVER = 'smtp.mailgun.org'
+MAIL_SERVER = '50.56.21.178'
 MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
