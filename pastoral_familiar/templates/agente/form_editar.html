@@ -15,16 +15,19 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
-                            {{ macros.render_field(form.nome) }}
+                            {{ macros.render_field(form.nome, maxlength="65") }}
                             {{ macros.render_field(form.dt_nascimento) }}
                             {{ macros.render_field(form.celular) }}
-                            {{ macros.render_field(form.endereco) }}
-                            {{ macros.render_field(form.bairro) }}
                             {{ macros.render_field(form.cep) }}
-                            {{ macros.render_field(form.cidade) }}
+                            {{ macros.render_field(form.rua, maxlength="65") }}
+                            {{ macros.render_field(form.numero) }}
+                            {{ macros.render_field(form.complemento, maxlength="50") }}
+                            {{ macros.render_field(form.bairro) }}
+                            {{ macros.render_field(form.cidade, maxlength="30") }}
+                            {{ macros.render_field(form.uf, maxlength="2") }}
                             {{ macros.render_field(form.telefone_residencial) }}
                             {{ macros.render_field(form.id_nucleo) }}
-  
+
                             {% if g.user.coordenador_pastoral == True %}
                                 {{ macros.render_checkbox_field(form.coordenador_nucleo) }}
                             {% endif %}

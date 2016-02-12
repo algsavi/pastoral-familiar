@@ -55,7 +55,8 @@ identity_loaded.connect(_on_principal_init)
 def index(page = 1):
     agentes = Agente.query.join(Nucleo, Agente.id_nucleo==Nucleo.id).add_columns(Agente.id, Agente.nome,
                     Nucleo.descricao, Agente.coordenador_nucleo, Agente.coordenador_pastoral, Agente.email,
-                    Agente.celular, Nucleo.id.label("id_nucleo")).filter(or_(Nucleo.id==g.user.id_nucleo, g.user.coordenador_pastoral==True, g.user.coordenador_nucleo==True),
+                    Agente.celular, Nucleo.id.label("id_nucleo")).filter(or_(Nucleo.id==g.user.id_nucleo,
+                    g.user.coordenador_pastoral==True, g.user.coordenador_nucleo==True),
                     and_(Agente.active==True)).order_by(Nucleo.descricao, Agente.nome).paginate(page, DATA_PER_PAGE, False)
 
     return render_template('agente/listar.html', menu='agente', cur_page=page, agentes=agentes)

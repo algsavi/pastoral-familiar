@@ -15,13 +15,16 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-12">
-                            {{ macros.render_field(form.nome) }}
+                            {{ macros.render_field(form.nome, maxlength="65") }}
                             {{ macros.render_field(form.dt_nascimento) }}
                             {{ macros.render_field(form.celular) }}
-                            {{ macros.render_field(form.endereco) }}
-                            {{ macros.render_field(form.bairro) }}
                             {{ macros.render_field(form.cep) }}
-                            {{ macros.render_field(form.cidade) }}
+                            {{ macros.render_field(form.rua, maxlength="65") }}
+                            {{ macros.render_field(form.numero) }}
+                            {{ macros.render_field(form.complemento, maxlength="50") }}
+                            {{ macros.render_field(form.bairro) }}
+                            {{ macros.render_field(form.cidade, maxlength="30") }}
+                            {{ macros.render_field(form.uf, maxlength="2") }}
                             {{ macros.render_field(form.telefone_residencial) }}
                             {{ macros.render_field(form.id_nucleo) }}
                         </div>
@@ -35,7 +38,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
-                            {{ macros.render_field(form.email) }}
+                            {{ macros.render_field(form.email, maxlength="40") }}
                             {{ macros.render_field(form.password) }}
                             {{ macros.render_field(form.password_confirm) }}
                         </div>
@@ -61,5 +64,51 @@
     $('#celular').mask('(00) 00000-0000');
     $('#telefone_residencial').mask('(00) 0000-0000');
     $('#cep').mask('00.000-000');
+    
+    $(document).ready(function() {
+        function limpa_formulário_cep() {
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+        }
+
+        $("#cep").blur(function() {
+            var cep = $(this).val().replace(/\D/g, '');
+
+            if (cep != "") {
+                var validacep = /^[0-9]{8}$/;
+
+                if(validacep.test(cep)) {
+                    $("#rua").val("...")
+                    $("#bairro").val("...")
+                    $("#cidade").val("...")
+                    $("#uf").val("...")
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            $("#rua").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                        }
+                        else {
+                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+                        }
+                    });
+                }
+                else {
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            }
+            else {
+                limpa_formulário_cep();
+            }
+        });
+    });
 </script>
 {% endblock %}

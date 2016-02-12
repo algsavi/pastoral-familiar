@@ -16,14 +16,19 @@ class AgenteForm(Form):
                             format='%d/%m/%Y')
 
     celular = TextField('Celular', [validators.Length(max=15)])
-    endereco = TextField(u'Endereço', [validators.DataRequired(u'Você precisa digitar o endereço!'), 
-                                        validators.Length(max=125)])
-    bairro = TextField(u'Bairro', [validators.DataRequired(u'Você precisa digitar o bairro!'), 
+    rua = TextField(u'Rua', [validators.Required(u'Você precisa digitar o endereço!'), 
+                                        validators.Length(max=65)])
+    numero = TextField(u'Número', [validators.Required(u'Você precisa digitar o número!')])    
+    complemento = TextField(u'Complemento', [validators.Required(u'Você precisa digitar o complemento!'), 
+                                        validators.Length(max=30)])
+    bairro = TextField(u'Bairro', [validators.Required(u'Você precisa digitar o bairro!'), 
                                         validators.Length(max=30)])
     cep = TextField(u'CEP', [validators.DataRequired(u'Você precisa digitar o CEP!'), 
                                         validators.Length(max=10)])
     cidade = TextField('Cidade', [validators.DataRequired(u'Você precisa digitar a cidade!'),
                                     validators.Length(max=30)])
+    uf = TextField('UF', [validators.DataRequired(u'Você precisa digitar o estado!'),
+                                    validators.Length(max=2)])
     telefone_residencial = TextField('Telefone Residencial', [validators.Length(max=15)])
     
     id_nucleo = SelectField(u'Núcleo', [validators.Required(u'Você precisa selecionar um núcleo')], coerce=int)

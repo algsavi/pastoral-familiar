@@ -16,7 +16,10 @@ evento = Blueprint('evento', __name__)
 @evento.route('/<int:page>', methods = ['GET', 'POST'])
 @login_required
 def index(page = 1):
-    eventos = Evento.query.outerjoin(Nucleo, Evento.id_nucleo==Nucleo.id).add_columns(Evento.tx_inscricao, Nucleo.descricao.label("nucleo_descricao"), Evento.id, Evento.descricao, Evento.dt_evento, Evento.id_nucleo).order_by(Evento.dt_evento, Nucleo.id).paginate(page, DATA_PER_PAGE, False)
+    eventos = Evento.query.outerjoin(Nucleo, Evento.id_nucleo==Nucleo.id).add_columns(Evento.tx_inscricao, 
+                    Nucleo.descricao.label("nucleo_descricao"), Evento.id, Evento.descricao, Evento.dt_evento, 
+                    Evento.id_nucleo).order_by(Evento.dt_evento, Nucleo.id, Evento.descricao).paginate(page, 
+                    DATA_PER_PAGE, False)
     print eventos
 
     return render_template('evento/listar.html', menu='eventos', cur_page=page, eventos = eventos)
