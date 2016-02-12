@@ -31,7 +31,8 @@ SECURITY_MSG_PASSWORD_IS_THE_SAME = (u"A nova senha precisa ser diferente da sen
 SECURITY_MSG_LOGIN = (u"Por favor, faça o login para acessar a página", "danger")
 SECURITY_MSG_INVALID_RESET_PASSWORD_TOKEN = (u"Token inválido", "danger")
 SECURITY_MSG_PASSWORD_RESET = (u'Sua senha foi redefinida com sucesso.', 'success')
-SECURITY_MSG_PASSWORD_RESET_REQUEST = (u'As instruções para alterar sua senha foram enviadas para o seu e-mail', 'success')
+SECURITY_MSG_PASSWORD_CHANGE = (u'Sua senha foi alterada com sucesso.', 'success')
+SECURITY_MSG_PASSWORD_RESET_REQUEST = (u'As instruções para alterar sua senha foram enviadas para o seu e-mail.', 'success')
 
 MAIL_SERVER = '50.56.21.178'
 MAIL_PORT = 465
