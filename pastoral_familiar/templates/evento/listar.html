@@ -61,24 +61,23 @@
                     </tbody>
                 </table>
             </div>
-            
-            <nav class="text-center">
-                <ul class="pagination">
-                    <li {% if not eventos.has_prev %} class="disabled" {% endif %}>
-                        <a href="{{ url_for('evento.index', page = eventos.prev_num) }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% for page in eventos.iter_pages() %}
-                        <li {% if page==cur_page %} class="disabled" {% endif %}><a href="{{ url_for('evento.index', page=page) }}">{{ page }}</a></li>
-                    {% endfor %}
-                    <li {% if not eventos.has_next %} class="disabled" {% endif %}>
-                        <a href="{{ url_for('evento.index', page = eventos.next_num) }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
+        <nav class="text-center">
+            <ul class="pagination">
+                <li {% if not eventos.has_prev %} class="disabled" {% endif %}>
+                    <a href="{{ url_for('evento.index', page = eventos.prev_num) }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% for page in eventos.iter_pages() %}
+                    <li {% if page==cur_page %} class="disabled" {% endif %}><a href="{{ url_for('evento.index', page=page) }}">{{ page }}</a></li>
+                {% endfor %}
+                <li {% if not eventos.has_next %} class="disabled" {% endif %}>
+                    <a href="{{ url_for('evento.index', page = eventos.next_num) }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 {% endblock %}
