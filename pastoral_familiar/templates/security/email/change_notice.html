@@ -1,0 +1,4 @@
+<p>Sua senha foi alterada.</p>
+{% if security.recoverable %}
+<p>Se você não alterou sua senha, <a href="{{ url_for_security('forgot_password', _external=True) }}">clique aqui para definir uma nova senha.</a>.</p>
+{% endif %}
