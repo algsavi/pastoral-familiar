@@ -42,8 +42,16 @@
                                         {% endif %}
                                     </td>
                                     <td>{{ evento.dt_evento.strftime('%d-%m-%Y')  }}</td>
+                                    {% if evento.tx_inscricao %}
                                     <td>{{ '{:7,.2f}'.format(evento.tx_inscricao) }}</td>
+                                    {% else %}
+                                    <td>-</td>
+                                    {% endif %}
+                                    {% if evento.nucleo_descricao %}
                                     <td>{{ evento.nucleo_descricao }}</td>
+                                    {% else %}
+                                    <td>-</td>
+                                    {% endif %}
                                     {% if g.user.coordenador_pastoral == True %}
                                     <td class="center">
                                         <a class="btn btn-danger" href="{{ url_for('evento.excluir', id=evento.id) }}">

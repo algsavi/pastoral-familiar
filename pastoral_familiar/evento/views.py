@@ -16,7 +16,7 @@ evento = Blueprint('evento', __name__)
 @evento.route('/<int:page>', methods = ['GET', 'POST'])
 @login_required
 def index(page = 1):
-    eventos = Evento.query.join(Nucleo, Evento.id_nucleo==Nucleo.id).add_columns(Evento.tx_inscricao, Nucleo.descricao.label("nucleo_descricao"), Evento.id, Evento.descricao, Evento.dt_evento, Evento.id_nucleo).order_by(Evento.dt_evento, Nucleo.id).paginate(page, DATA_PER_PAGE, False)
+    eventos = Evento.query.outerjoin(Nucleo, Evento.id_nucleo==Nucleo.id).add_columns(Evento.tx_inscricao, Nucleo.descricao.label("nucleo_descricao"), Evento.id, Evento.descricao, Evento.dt_evento, Evento.id_nucleo).order_by(Evento.dt_evento, Nucleo.id).paginate(page, DATA_PER_PAGE, False)
     print eventos
 
     return render_template('evento/listar.html', menu='eventos', cur_page=page, eventos = eventos)
@@ -29,12 +29,15 @@ def novo():
     
     form = EventoForm()
     form.id_nucleo.choices = nucleos
-    form.id_nucleo.choices.insert(0, (0, "Selecione..."))
+    form.id_nucleo.choices.insert(0, (0, 'Selecione...'))
 
     if request.method == "POST" and form.validate_on_submit():
         evento = Evento()
         form.populate_obj(evento)
-        
+
+        if evento.id_nucleo == 0:
+            evento.id_nucleo = None
+
         db.session.add(evento)
         db.session.commit()
         
@@ -58,6 +61,9 @@ def editar(id):
         
         if request.method == "POST" and form.validate_on_submit():
             form.populate_obj(evento)
+            
+            if evento.id_nucleo == 0:
+                evento.id_nucleo = None
             
             db.session.commit()
 

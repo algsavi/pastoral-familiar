@@ -20,5 +20,5 @@ class EventoForm(Form):
                             [validators.DataRequired(u'Você precisa digitar a data do evento!')],
                             format='%d/%m/%Y')
     tp_evento = SelectField(u'Tipo Evento', choices=[('', 'Selecione...'), ('E', 'Encontro'), ('F', u'Formação')], validators=[validators.Required(u'Você precisa selecionar o tipo do evento')])
-    tx_inscricao = BRLDecimalField(u'Taxa Inscrição')
-    id_nucleo = SelectField(u'Núcleo', [validators.Required(u'Você precisa selecionar um núcleo')], coerce=int)
+    tx_inscricao = BRLDecimalField(u'Taxa Inscrição', [validators.optional()])
+    id_nucleo = SelectField(u'Núcleo', coerce=int)
