@@ -19,8 +19,7 @@ class AgenteForm(Form):
     rua = TextField(u'Rua', [validators.Required(u'Você precisa digitar o endereço!'), 
                                         validators.Length(max=65)])
     numero = TextField(u'Número', [validators.Required(u'Você precisa digitar o número!')])    
-    complemento = TextField(u'Complemento', [validators.Required(u'Você precisa digitar o complemento!'), 
-                                        validators.Length(max=30)])
+    complemento = TextField(u'Complemento', [validators.Length(max=30)])
     bairro = TextField(u'Bairro', [validators.Required(u'Você precisa digitar o bairro!'), 
                                         validators.Length(max=30)])
     cep = TextField(u'CEP', [validators.DataRequired(u'Você precisa digitar o CEP!'), 
