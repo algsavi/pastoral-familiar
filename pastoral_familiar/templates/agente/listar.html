@@ -89,11 +89,10 @@
     
     <script>
         $(document).ready(function() {
-        $('#agentes').DataTable( {
-            createdRow: function ( row ) {
-                $('td', row).attr('tabindex', 0);
-            }
-        });
+            $('#agentes').DataTable( {
+                "paging": false,
+                "info":   false
+            });
         });
     </script>
 {% endblock %}
