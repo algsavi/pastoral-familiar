@@ -10,7 +10,7 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
+                <table id="agentes" class="table table-striped table-bordered table-hover">
                     <col width="3%">
                     <col width="45%">
                     <col width="17%">
@@ -83,4 +83,21 @@
             </nav>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+        $('#agentes').DataTable( {
+            createdRow: function ( row ) {
+                $('td', row).attr('tabindex', 0);
+            }
+        });
+        });
+    </script>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.css"/>    
 {% endblock %}
