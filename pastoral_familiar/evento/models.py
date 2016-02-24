@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from extensions import db
-from werkzeug.security import generate_password_hash, check_password_hash
 
 class Evento(db.Model):
     __tablename__ = 'evento'
@@ -11,4 +10,5 @@ class Evento(db.Model):
     dt_evento = db.Column(db.Date)
     tp_evento = db.Column(db.CHAR(1))
     tx_inscricao = db.Column(db.DECIMAL(7, 2))
+    aberto_inscricao = db.Column(db.Boolean)
     id_nucleo = db.Column(db.Integer, db.ForeignKey('nucleo.id'))

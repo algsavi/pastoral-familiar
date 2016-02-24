@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+
 {% block content %}
     <section class="content-header">
         <h2>Núcleos <small>- listar núcleos</small></h2>
@@ -44,21 +46,7 @@
             </div>
         </div>
         <nav class="text-center">
-            <ul class="pagination">
-                <li {% if not nucleos.has_prev %} class="disabled" {% endif %}>
-                    <a href="{{ url_for('nucleo.index', page = nucleos.prev_num) }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {% for page in nucleos.iter_pages() %}
-                    <li {% if page==cur_page %} class="disabled" {% endif %}><a href="{{ url_for('nucleo.index', page=page) }}">{{ page }}</a></li>
-                {% endfor %}
-                <li {% if not nucleos.has_next %} class="disabled" {% endif %}>
-                    <a href="{{ url_for('nucleo.index', page = nucleos.next_num) }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
+            {{ render_pagination(nucleos) }}
         </nav>
     </div>
 {% endblock %}

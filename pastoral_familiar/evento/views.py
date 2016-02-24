@@ -18,8 +18,8 @@ evento = Blueprint('evento', __name__)
 def index(page = 1):
     eventos = Evento.query.outerjoin(Nucleo, Evento.id_nucleo==Nucleo.id).add_columns(Evento.tx_inscricao, 
                     Nucleo.descricao.label("nucleo_descricao"), Evento.id, Evento.descricao, Evento.dt_evento, 
-                    Evento.id_nucleo).order_by(Evento.dt_evento, Nucleo.id, Evento.descricao).paginate(page, 
-                    DATA_PER_PAGE, False)
+                    Evento.aberto_inscricao, Evento.tp_evento, Evento.id_nucleo).order_by(Evento.dt_evento,
+                    Nucleo.id, Evento.descricao).paginate(page, DATA_PER_PAGE, False)
     print eventos
 
     return render_template('evento/listar.html', menu='eventos', cur_page=page, eventos = eventos)
@@ -52,6 +52,7 @@ def novo():
 
 
 @evento.route('/editar/<int:id>/', methods=['GET', 'POST'])
+@login_required
 def editar(id):
     evento = Evento.query.get_or_404(id)   
     nucleos = [(c.id, c.descricao) for c in Nucleo.query.order_by(Nucleo.descricao).all()]

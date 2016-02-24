@@ -1,13 +1,15 @@
-{% import 'macros/macros.html' as macros %}
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
 {% block content %}
     <section class="content-header">
         <h2>Cadastro <small>- núcleos</small></h2>
     </section>
     <div class="row">
         <div class="col-lg-12">
-            <form action="{{ form_action }}" role="form" class="form-horizontal" method="POST">
+            <form action="{{ form_action }}" role="form" class="form form-horizontal" method="POST">
                 {{ form.csrf_token }}
+                {{ wtf.form_errors(form, hiddens="only") }}
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -15,8 +17,8 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-lg-12">
-                                {{ macros.render_field(form.descricao, maxlength="100") }}
-                                {{ macros.render_field(form.objetivo, maxlength="100") }}
+                                {{ wtf.form_field(form.descricao, maxlength="100") }}
+                                {{ wtf.form_field(form.objetivo, maxlength="100") }}
                             </div>
                         </div>
                     </div>

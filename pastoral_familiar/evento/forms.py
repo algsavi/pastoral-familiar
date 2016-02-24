@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_wtf import Form
-from wtforms import TextField, DecimalField, Field, DateField, SelectField, validators
+from wtforms import TextField, HiddenField, DecimalField, Field, DateField, SelectField, validators
 
 
 class BRLDecimalField(DecimalField):
@@ -21,4 +21,5 @@ class EventoForm(Form):
                             format='%d/%m/%Y')
     tp_evento = SelectField(u'Tipo Evento', choices=[('', 'Selecione...'), ('E', 'Encontro'), ('F', u'Formação')], validators=[validators.Required(u'Você precisa selecionar o tipo do evento')])
     tx_inscricao = BRLDecimalField(u'Taxa Inscrição', [validators.optional()])
+    aberto_inscricao = SelectField(u'Aberto Inscrição', choices=[('', 'Selecione...'), ('True', 'Sim'), ('False', u'Não')], validators=[validators.optional()], coerce=unicode)
     id_nucleo = SelectField(u'Núcleo', coerce=int)

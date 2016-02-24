@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+
 {% block content %}
     <section class="content-header">
         <h2>Agentes <small>- listar agentes</small></h2>
@@ -65,38 +67,8 @@
                 </table>
             </div>
             <nav class="text-center">
-                <ul class="pagination">
-                    <li {% if not agentes.has_prev %} class="disabled" {% endif %}>
-                        <a href="{{ url_for('agente.index', page = agentes.prev_num) }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% for page in agentes.iter_pages() %}
-                        <li {% if page==cur_page %} class="disabled" {% endif %}><a href="{{ url_for('agente.index', page=page) }}">{{ page }}</a></li>
-                    {% endfor %}
-                    <li {% if not agentes.has_next %} class="disabled" {% endif %}>
-                        <a href="{{ url_for('agente.index', page = agentes.next_num) }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
+                {{ render_pagination(agentes) }}
             </nav>
         </div>
     </div>
-{% endblock %}
-{% block scripts %}
-    <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
-    
-    <script>
-        $(document).ready(function() {
-            $('#agentes').DataTable( {
-                "paging": false,
-                "info":   false
-            });
-        });
-    </script>
-{% endblock %}
-
-{% block styles %}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.css"/>    
 {% endblock %}

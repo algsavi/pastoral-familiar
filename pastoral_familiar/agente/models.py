@@ -27,6 +27,7 @@ class Agente(UserMixin, db.Model):
     coordenador_pastoral = db.Column(db.Boolean)
     coordenador_nucleo = db.Column(db.Boolean)
     active = db.Column(db.Boolean)
+    sexo = db.Column(db.CHAR(1))
     id_nucleo = db.Column(db.Integer, db.ForeignKey('nucleo.id'))
     roles = db.relationship('Perfil', secondary=perfis_agentes, backref='perfil', lazy='dynamic')
 

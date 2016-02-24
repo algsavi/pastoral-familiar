@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+
 {% block content %}
     <section class="content-header">
         <h2>Evento <small>- listar eventos</small></h2>
@@ -24,6 +26,7 @@
                             <th>Data Evento</th>
                             <th>Tx. Inscrição</th>
                             <th>Núcleo</th>
+                            <th>Inscrição</th>
                             {% if g.user.coordenador_pastoral == True %}
                             <th>Excluir</th>
                             {% endif %}
@@ -52,6 +55,13 @@
                                     {% else %}
                                     <td>-</td>
                                     {% endif %}
+                                    <td>
+                                        {% if evento.tp_evento == 'E' and evento.aberto_inscricao == True %}
+                                        <a href="{{ url_for('encontrista.inscricao', id=evento.id) }}">
+                                            <i class="glyphicon glyphicon-link"></i>
+                                        </a>
+                                        {% endif %}
+                                    </td>
                                     {% if g.user.coordenador_pastoral == True %}
                                     <td class="center">
                                         <a class="btn btn-danger" href="{{ url_for('evento.excluir', id=evento.id) }}">
@@ -71,21 +81,7 @@
             </div>
         </div>
         <nav class="text-center">
-            <ul class="pagination">
-                <li {% if not eventos.has_prev %} class="disabled" {% endif %}>
-                    <a href="{{ url_for('evento.index', page = eventos.prev_num) }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {% for page in eventos.iter_pages() %}
-                    <li {% if page==cur_page %} class="disabled" {% endif %}><a href="{{ url_for('evento.index', page=page) }}">{{ page }}</a></li>
-                {% endfor %}
-                <li {% if not eventos.has_next %} class="disabled" {% endif %}>
-                    <a href="{{ url_for('evento.index', page = eventos.next_num) }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
+            {{ render_pagination(eventos) }}
         </nav>
     </div>
 {% endblock %}
