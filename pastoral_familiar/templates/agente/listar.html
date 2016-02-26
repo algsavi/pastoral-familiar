@@ -44,12 +44,14 @@
                                     <td>{{ agente.email }}</td>
                                     <td>{{ agente.celular }}</td>
                                     <td>{{ agente.descricao }}</td>
-                                    {% if g.user.coordenador_pastoral == True or g.user.coordenador_nucleo == True %}
+                                    {% if g.user.coordenador_pastoral == True or (g.user.coordenador_nucleo == True and agente.id_nucleo == g.user.id_nucleo) %}
                                     <td class="center">
                                         <a class="btn btn-danger" href="{{ url_for('agente.excluir', id=agente.id) }}">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </a>
                                     </td>  
+                                    {% elif (g.user.coordenador_nucleo == True and agente.id_nucleo != g.user.id_nucleo) %}
+                                        <td class="center">-</td>  
                                     {% endif %}
                                 </tr>
                             {% endfor %}
