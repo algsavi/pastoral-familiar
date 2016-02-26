@@ -12,7 +12,7 @@ encontrista = Blueprint('encontrista', __name__)
 
 @encontrista.route('/inscricao/<int:id>/', methods=['GET', 'POST'])
 def inscricao(id):
-    evento = Evento.query.filter(Evento.aberto_inscricao == True, Evento.dt_evento >= time.strftime("%d/%m/%Y"), Evento.id == id).first()
+    evento = Evento.query.filter(Evento.aberto_inscricao == True, Evento.dt_evento >= time.strftime("%m/%d/%Y"), Evento.id == id).first()
     
     if not evento:
         flash(u'Evento inválido ou inscrições encerradas!', "warning")

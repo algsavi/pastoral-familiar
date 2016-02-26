@@ -9,8 +9,6 @@ class InscricaoForm(Form):
     nome = FieldList(TextField('Nome', [validators.Required(u'Você precisa digitar o nome!'),
                               validators.Length(max=65)]), min_entries=2)
     dt_nascimento = FieldList(DateField('Data Nascimento',
-                              [validators.DataRequired(
-                                  u'Você precisa digitar a data de nascimento!')],
                               format='%d/%m/%Y'), min_entries=2)
     celular = FieldList(TextField('Celular', [validators.Length(max=15)]), min_entries=2)
     telefone_residencial = TextField('Telefone Residencial', [

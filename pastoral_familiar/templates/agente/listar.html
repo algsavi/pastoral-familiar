@@ -26,7 +26,7 @@
                             <th>E-mail</th>
                             <th>Celular</th>
                             <th>Núcleo</th>
-                            {% if g.user.coordenador_pastoral == True %}
+                            {% if g.user.coordenador_pastoral == True or g.user.coordenador_nucleo == True %}
                             <th>Excluir</th>
                             {% endif %}
                         </tr>
