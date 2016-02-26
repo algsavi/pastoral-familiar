@@ -6,30 +6,31 @@ from wtforms import TextField, FieldList, HiddenField, DecimalField, Field, Date
 
 
 class InscricaoForm(Form):
-    nome = FieldList(TextField('Nome', [validators.Required(u'Você precisa digitar o nome!'),
-                              validators.Length(max=65)]), min_entries=2)
-    dt_nascimento = FieldList(DateField('Data Nascimento',
+    nome = FieldList(TextField('Nome', [validators.Length(max=65),
+                                validators.Required(u'Você precisa digitar o nome!')]), min_entries=2)
+    dt_nascimento = FieldList(DateField('Data Nascimento', [validators.Optional()],
                               format='%d/%m/%Y'), min_entries=2)
-    celular = FieldList(TextField('Celular', [validators.Length(max=15)]), min_entries=2)
+    celular = FieldList(TextField('Celular', [validators.Length(max=15),
+                        validators.Required(u'Você precisa digitar o celular')]), min_entries=2)
     telefone_residencial = TextField('Telefone Residencial', [
-                                     validators.Length(max=15)])
+                                     validators.Length(max=15), validators.Optional()])
     email = FieldList(TextField('Email', [validators.DataRequired(u'Você precisa digitar o e-mail!'),
                                 validators.Length(max=40), validators.email(u'E-mail inválido')]), min_entries=2)
-    rua = TextField(u'Rua', [validators.Required(u'Você precisa digitar o endereço!'),
+    rua = TextField(u'Rua', [validators.Optional(),
                              validators.Length(max=65)])
-    numero = TextField(u'Número', [validators.Required(
-        u'Você precisa digitar o número!')])
-    complemento = TextField(u'Complemento', [validators.Length(max=30)])
-    bairro = TextField(u'Bairro', [validators.Required(u'Você precisa digitar o bairro!'),
+    numero = TextField(u'Número', [validators.Optional()])
+    complemento = TextField(u'Complemento', [validators.Length(max=30), validators.Optional()])
+    bairro = TextField(u'Bairro', [validators.Optional(),
                                    validators.Length(max=30)])
-    cep = TextField(u'CEP', [validators.DataRequired(u'Você precisa digitar o CEP!'),
+    cep = TextField(u'CEP', [validators.Optional(),
                              validators.Length(max=10)])
-    cidade = TextField('Cidade', [validators.DataRequired(u'Você precisa digitar a cidade!'),
+    cidade = TextField('Cidade', [validators.Optional(),
                                   validators.Length(max=30)])
-    uf = TextField('UF', [validators.DataRequired(u'Você precisa digitar o estado!'),
+    uf = TextField('UF', [validators.Optional(),
                           validators.Length(max=2)])
     dt_casamento = DateField('Data Casamento',
                               [validators.DataRequired(
                                   u'Você precisa digitar a data de casamento!')],
                               format='%d/%m/%Y')
-    paroquia_casamento = TextField(u'Paróquia Casamento', [validators.Length(max=100)])  
+    paroquia_casamento = TextField(u'Paróquia Casamento', [validators.Required(u'Você precisa digitar a Paróquia do Casamento'),
+                            validators.Length(max=100)])  

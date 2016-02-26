@@ -20,7 +20,6 @@ def index(page = 1):
                     Nucleo.descricao.label("nucleo_descricao"), Evento.id, Evento.descricao, Evento.dt_evento, 
                     Evento.aberto_inscricao, Evento.tp_evento, Evento.id_nucleo).order_by(Evento.dt_evento,
                     Nucleo.id, Evento.descricao).paginate(page, DATA_PER_PAGE, False)
-    print eventos
 
     return render_template('evento/listar.html', menu='eventos', cur_page=page, eventos = eventos)
 
