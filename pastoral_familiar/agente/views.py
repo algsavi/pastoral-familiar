@@ -93,6 +93,7 @@ def novo():
 
 
 @agente.route('/editar/<int:id>/', methods=['GET', 'POST'])
+@login_required
 def editar(id):
     agente = Agente.query.get_or_404(id)
     permission = EditarAgenteNucleoPermission(agente.id_nucleo)
@@ -124,15 +125,19 @@ def editar(id):
 
 @agente.route('/excluir/<int:id>/', methods=['GET', 'POST'])
 @login_required
-@coordenador_pastoral.require(http_exception=403)
 def excluir(id):
-    if id <> None and request.method == "GET":
-        agente = Agente.query.get_or_404(id)
+    permission = EditarAgenteNucleoPermission(agente.id_nucleo)
 
-        agente.active = False
+    if is_accessible() or g.user.id == id or (is_accessible(roles_accepted=('coordenador_nucleo', )) and permission.can()):
+        if id <> None and request.method == "GET":
+            agente = Agente.query.get_or_404(id)
 
-        db.session.commit()
-        
-        flash(u"Agente excluído com sucesso!", "success")
+            agente.active = False
+
+            db.session.commit()
+            
+            flash(u"Agente excluído com sucesso!", "success")
+    else:
+        abort(403)  
 
     return redirect("/agente/")
