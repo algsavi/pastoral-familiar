@@ -126,12 +126,11 @@ def editar(id):
 @agente.route('/excluir/<int:id>/', methods=['GET', 'POST'])
 @login_required
 def excluir(id):
-    permission = EditarAgenteNucleoPermission(g.user.id_nucleo)
+    agente = Agente.query.get_or_404(id)
+    permission = EditarAgenteNucleoPermission(agente.id_nucleo)
 
     if is_accessible() or g.user.id == id or (is_accessible(roles_accepted=('coordenador_nucleo', )) and permission.can()):
         if id <> None and request.method == "GET":
-            agente = Agente.query.get_or_404(id)
-
             agente.active = False
 
             db.session.commit()
