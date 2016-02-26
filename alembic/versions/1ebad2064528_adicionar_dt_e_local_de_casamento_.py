@@ -19,8 +19,10 @@ import sqlalchemy as sa
 def upgrade():
     op.add_column('casal_encontrista', sa.Column('dt_casamento', sa.Date(), nullable=True))
     op.add_column('casal_encontrista', sa.Column('paroquia_casamento', sa.VARCHAR(100), nullable=True))
+    op.execute('ALTER TABLE encontrista ALTER COLUMN dt_nascimento DROP NOT NULL;')
 
 
 def downgrade():
     op.drop_column('casal_encontrista', 'dt_casamento')
     op.drop_column('casal_encontrista', 'paroquia_casamento')
+    op.execute('ALTER TABLE encontrista ALTER COLUMN dt_nascimento SET NOT NULL;')
