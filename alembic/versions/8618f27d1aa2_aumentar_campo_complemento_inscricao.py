@@ -20,5 +20,6 @@ def upgrade():
     op.execute('ALTER TABLE casal_encontrista ALTER COLUMN complemento TYPE VARCHAR(30)')
 
 
+
 def downgrade():
     op.execute('ALTER TABLE casal_encontrista ALTER COLUMN complemento TYPE VARCHAR(10)')
